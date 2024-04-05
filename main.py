@@ -17,6 +17,9 @@ database[0]['content']['tries'] = 0
 
 @bot.message_handler(commands=['start'])
 def welcome(message):
+    '''
+    Функция, срабатывающая в начале работы бота
+    '''
     chat_id = message.chat.id
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
     button_buy = types.KeyboardButton(
