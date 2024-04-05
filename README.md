@@ -5,6 +5,7 @@ Antique_Bot
 Telegram API:
 ---
 Ссылка: [@Antique_Bot](, "Empty so far:(")
+Telegram токен: "6286254023:AAF3bz8cBQNz2CbT5gzW5GQ0invtz9XAbco"
 
 Зависимости проекта:
 ---
