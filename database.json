@@ -4,14 +4,19 @@
     "chats_data": {
       "1272297446": {
         "last_img_message": 0,
-        "message_id": 1358,
+        "message_id": 1680,
         "last_text": [
           "/start",
-          "\u041a\u0443\u043f\u0438\u0442\u044c",
-          "\u041a\u0443\u043f\u0438\u0442\u044c"
+          "\u041f\u0440\u043e\u0434\u0430\u0442\u044c",
+          "\u041f\u0440\u043e\u0434\u0430\u0442\u044c",
+          "\u0421\u043f\u0438\u0441\u043e\u043a \u0432\u0430\u0448\u0438\u0445 \u0442\u043e\u0432\u0430\u0440\u043e\u0432:",
+          "\u0421\u043f\u0438\u0441\u043e\u043a \u0432\u0430\u0448\u0438\u0445 \u0442\u043e\u0432\u0430\u0440\u043e\u0432:",
+          "\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u043a\u0430\u0442\u0435\u0433\u043e\u0440\u0438\u044e \u0442\u043e\u0432\u0430\u0440\u043e\u0432"
         ],
         "last_markup": [
-          "{\"keyboard\": [[{\"text\": \"\\u041a\\u0443\\u043f\\u0438\\u0442\\u044c\"}, {\"text\": \"\\u041f\\u0440\\u043e\\u0434\\u0430\\u0442\\u044c\"}]], \"resize_keyboard\": true}"
+          "{\"keyboard\": [[{\"text\": \"\\u041a\\u0443\\u043f\\u0438\\u0442\\u044c\"}, {\"text\": \"\\u041f\\u0440\\u043e\\u0434\\u0430\\u0442\\u044c\"}]], \"resize_keyboard\": true}",
+          "{\"inline_keyboard\": [[{\"text\": \"\\u0414\\u043e\\u0431\\u0430\\u0432\\u0438\\u0442\\u044c \\u0442\\u043e\\u0432\\u0430\\u0440\", \"callback_data\": \"add_product\"}], [{\"text\": \"< \\u041d\\u0430\\u0437\\u0430\\u0434\", \"callback_data\": \"back\"}]]}",
+          "{\"inline_keyboard\": [[{\"text\": \"\\u041c\\u0435\\u0431\\u0435\\u043b\\u044c\", \"callback_data\": \"add_furniture\"}], [{\"text\": \"\\u041f\\u043e\\u0441\\u0443\\u0434\\u0430\", \"callback_data\": \"add_dishes\"}], [{\"text\": \"\\u042e\\u0432\\u0435\\u043b\\u0438\\u0440\\u043d\\u044b\\u0435 \\u0438\\u0437\\u0434\\u0435\\u043b\\u0438\\u044f\", \"callback_data\": \"add_jewellery\"}], [{\"text\": \"\\u041c\\u043e\\u043d\\u0435\\u0442\\u044b\", \"callback_data\": \"add_coins\"}], [{\"text\": \"< \\u041d\\u0430\\u0437\\u0430\\u0434\", \"callback_data\": \"back\"}]]}"
         ]
       }
     }
@@ -136,5 +141,17 @@
         ]
       }
     ]
+  },
+  {
+    "type": "sellers_catalogues",
+    "content": {
+      "1272297446": {
+        "12": {
+          "name": "sofa",
+          "min_bid": 1600,
+          "cur_bid": 1600
+        }
+      }
+    }
   }
 ]
