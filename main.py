@@ -12,7 +12,7 @@ for i in range(len(database[1]['content'])):
 database[0]['chats_data'].clear()
 
 
-@bot.message_handler(commands=['start'])
+@bot.message_handler(func=lambda message: message.text == 'Вернуться в каталог' or message.text == '/start')
 def welcome(message):
     '''
     Функция, срабатывающая в начале работы бота
@@ -64,7 +64,7 @@ def buyer_menu(message):
 
 
 @bot.message_handler(
-    func=lambda message: message.text == 'Продать' or message.text == 'Вернуться в каталог')
+    func=lambda message: message.text == 'Продать')
 def seller_menu(message):
     chat_id = message.chat.id
     a = types.ReplyKeyboardRemove()
@@ -84,7 +84,9 @@ def seller_menu(message):
     back = types.InlineKeyboardButton(text="< Назад", callback_data="back")
     keyboard.add(back)
     if len(database[2]['content'][str(chat_id)]):
-        bot.send_message(chat_id, 'Список ваших товаров:', reply_markup=keyboard)
+        back_from_adding = bot.send_message(chat_id, 'Список ваших товаров:', reply_markup=keyboard)
+        database[0]['chats_data'][str(chat_id)]['message_id'] = back_from_adding.id
+        database[0]['chats_data'][str(chat_id)]['last_text'].append(back_from_adding.text)
     else:
         bot.send_message(chat_id, 'У вас нет товаров. Добавьте их', reply_markup=keyboard)
     rm_id = keyboard.to_json()
@@ -322,7 +324,7 @@ def show_product_buyer(call):
     cat0 = types.InlineKeyboardButton(text="Сделать ставку",
                                       callback_data='bid' + call.data)
     cat1 = types.InlineKeyboardButton(text="Заказать экспертизу",
-                                      callback_data='get_expert')
+                                      url='https://antik40.ru/stati/ekspertiza-antikvariata-v-moskve.html')
     cat2 = types.InlineKeyboardButton(text="< Назад",
                                       callback_data='back')
     keyboard.add(cat0, cat1, cat2)
@@ -336,19 +338,25 @@ def show_product_buyer(call):
                           text='Название товара: ' +
                                database[1]['content'][int(call.data) // 10 - 1]['products'][int(call.data) % 10][
                                    'name'] + '\nТекущая ставка: ' + str(
-                              database[1]['content'][int(call.data) // 10 - 1]['products'][int(call.data) % 10][
+                               database[1]['content'][int(call.data) // 10 - 1]['products'][int(call.data) % 10][
                                   'cur_bid']) + '$\nКонец торгов: ' +
                                database[1]['content'][int(call.data) // 10 - 1]['products'][int(call.data) % 10][
                                    'bid_end'], reply_markup=keyboard)
 
 
-@bot.callback_query_handler(func=lambda call: call.data == 'ready')
-def go_back_from_bid(call):
-    last_message_id = database[0]['chats_data'][str(call.message.chat.id)]['message_id']
-    bot.delete_message(message_id=last_message_id,
+@bot.callback_query_handler(func=lambda call: call.data[:7] == 'end_bid')
+def end_bid(call):
+    keyboard = types.InlineKeyboardMarkup(row_width=1)
+    back_to_cat = types.InlineKeyboardButton(text='Вернуться в каталог', callback_data='back')
+    keyboard.add(back_to_cat)
+    bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.id,
+                          text='Торги успешно закрыты', reply_markup=keyboard)
+    bot.delete_message(message_id=database[0]['chats_data'][str(call.message.chat.id)]['last_img_message'],
                        chat_id=call.message.chat.id)
-    bot.delete_message(message_id=last_message_id - 2,
-                       chat_id=call.message.chat.id)
+    database[0]['chats_data'][str(call.message.chat.id)]['last_img_message'] = 0
+    database[1]['content'][int(call.data[7:]) // 10 - 1]['products'].pop(int(call.data[7:]) % 10)
+    database[2]['content'][str(call.message.chat.id)].remove(int(call.data[7:]))
+    list_of_ids.remove(int(call.data[7:]))
 
 
 @bot.callback_query_handler(func=lambda call: int(call.data[6:]) in list_of_ids)
@@ -358,7 +366,7 @@ def show_product_seller(call):
     message_id = message.message_id
     keyboard = types.InlineKeyboardMarkup(row_width=1)
     cat0 = types.InlineKeyboardButton(text="Закрыть торги",
-                                      callback_data='end_bid')
+                                      callback_data='end_bid' + call.data[6:])
     cat1 = types.InlineKeyboardButton(text="< Назад",
                                       callback_data='back')
     keyboard.add(cat0, cat1)
@@ -374,7 +382,7 @@ def show_product_seller(call):
                                    int(call.data[6:]) % 10][
                                    'name'] + '\nТекущая ставка: ' + str(
                               database[1]['content'][int(call.data[6:]) // 10 - 1]['products'][int(call.data[6:]) % 10][
-                                  'cur_bid']) + '\nКонец торгов: ' +
+                                  'cur_bid']) + '$\nКонец торгов: ' +
                                database[1]['content'][int(call.data[6:]) // 10 - 1]['products'][
                                    int(call.data[6:]) % 10][
                                    'bid_end'], reply_markup=keyboard)
