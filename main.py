@@ -2,7 +2,7 @@ import telebot
 from telebot import types
 import json
 
-bot = telebot.TeleBot("6286254023:AAF3bz8cBQNz2CbT5gzW5GQ0invtz9XAbco")
+bot = telebot.TeleBot("insert token here")
 f = open('database.json')
 database = json.load(f)
 list_of_ids = []
